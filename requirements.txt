@@ -1,0 +1,6 @@
+The following packages are used in this project:
+- beautifulsoup4 : used for parsing HTML and XML documents
+- Pillow : Python Imaging Library (PIL), which adds support for opening, manipulating, and saving images
+- requests :  allow you to send HTTP/1.1 requests using Python
+- lxml : a Python library which allows for easy handling of XML and HTML files
+- urllib :  the URL handling module for python used to fetch URLs
