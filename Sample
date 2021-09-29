@@ -1,0 +1,35 @@
+import requests, lxml, urllib.parse
+from bs4 import BeautifulSoup
+
+# Adding User-agent (default user-agent from requests library is 'python-requests')
+# https://github.com/psf/requests/blob/589c4547338b592b1fb77c65663d8aa6fbb7e38b/requests/utils.py#L808-L814
+headers = {
+    "User-Agent":
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3538.102 Safari/537.36 Edge/18.19582"
+}
+
+# Search query
+params = {'q': 'сoffee buy'}
+
+# Getting HTML response
+html = requests.get(f'https://www.google.com/search?q=',
+                    headers=headers,
+                    params=params).text
+
+# Getting HTML code from BeautifulSoup
+soup = BeautifulSoup(html, 'lxml')
+
+# Looking for container that has all necessary data findAll() or find_all()
+for container in soup.findAll('div', class_='RnJeZd top pla-unit-title'):
+  # Scraping title
+  title = container.text
+
+  # Creating beginning of the link to join afterwards
+  startOfLink = 'https://www.googleadservices.com/pagead'
+  # Scraping end of the link to join afterwards
+  endOfLink = container.find('a')['href']
+  # Combining (joining) relative and absolute URL's (adding begining and end link)
+  ad_link = urllib.parse.urljoin(startOfLink, endOfLink)
+
+  # Printing each title and link on a new line
+  print(f'{title}\n{ad_link}\n')
